@@ -1,0 +1,59 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env
+frontend/.env.*
+
+# Node / Next.js
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+out/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Generated media and runtime assets
+backend/outputs/
+backend/assets/audio/
+backend/assets/video/
+backend/assets/images/
+backend/assets/youtube_token.json
+backend/*TEMP_MPY_*.mp4
+backend/*.mp4
+backend/*.mp3
+
+# Keep optional static asset folders available if needed
+!backend/assets/
+!backend/assets/music/
+!backend/assets/fonts/
+!backend/assets/music/.gitkeep
+!backend/assets/fonts/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Docker / local runtime
+*.pid
+*.log
