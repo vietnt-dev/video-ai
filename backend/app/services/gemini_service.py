@@ -21,6 +21,34 @@ GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta"
 IMAGEN_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 
 
+def _gemini_headers() -> dict[str, str]:
+    return {
+        "Content-Type": "application/json",
+        "x-goog-api-key": settings.gemini_api_key,
+    }
+
+
+def _extract_google_error(resp: httpx.Response) -> str:
+    try:
+        data = resp.json()
+        return data.get("error", {}).get("message") or resp.text
+    except Exception:
+        return resp.text
+
+
+def _raise_gemini_error(resp: httpx.Response) -> None:
+    message = _extract_google_error(resp)
+    if resp.status_code == 403:
+        raise ValueError(
+            "Gemini API bị từ chối quyền truy cập (403). "
+            "Hãy kiểm tra GEMINI_API_KEY, API restrictions và quyền truy cập model trong Google AI Studio. "
+            f"Chi tiết: {message}"
+        )
+    if resp.status_code == 400:
+        raise ValueError(f"Gemini API error: {message}")
+    resp.raise_for_status()
+
+
 # ─── Text Generation (Script + SEO) ──────────────────────────────────────────
 
 async def gemini_generate(
@@ -34,7 +62,7 @@ async def gemini_generate(
     Returns: raw text response
     """
     model = settings.gemini_model
-    url = f"{GEMINI_BASE}/models/{model}:generateContent?key={settings.gemini_api_key}"
+    url = f"{GEMINI_BASE}/models/{model}:generateContent"
 
     payload: dict = {
         "contents": [
@@ -53,19 +81,16 @@ async def gemini_generate(
         payload["generationConfig"]["responseMimeType"] = "application/json"
 
     async with httpx.AsyncClient(timeout=60.0) as client:
-        resp = await client.post(url, json=payload)
+        resp = await client.post(url, json=payload, headers=_gemini_headers())
 
         if resp.status_code == 429:
             # Rate limit — chờ và retry
             print("⚠️  Gemini rate limit, chờ 5 giây...")
             await asyncio.sleep(5)
-            resp = await client.post(url, json=payload)
+            resp = await client.post(url, json=payload, headers=_gemini_headers())
 
-        if resp.status_code == 400:
-            err = resp.json()
-            raise ValueError(f"Gemini API error: {err.get('error', {}).get('message', resp.text)}")
-
-        resp.raise_for_status()
+        if resp.status_code >= 400:
+            _raise_gemini_error(resp)
         data = resp.json()
 
     # Extract text từ response
@@ -97,7 +122,7 @@ async def imagen_generate(
         return None
 
     model = settings.gemini_image_model
-    url = f"{IMAGEN_BASE}/{model}:predict?key={settings.gemini_api_key}"
+    url = f"{IMAGEN_BASE}/{model}:predict"
 
     payload = {
         "instances": [{"prompt": prompt}],
@@ -111,16 +136,15 @@ async def imagen_generate(
 
     try:
         async with httpx.AsyncClient(timeout=60.0) as client:
-            resp = await client.post(url, json=payload)
+            resp = await client.post(url, json=payload, headers=_gemini_headers())
 
             if resp.status_code == 429:
                 print("⚠️  Imagen rate limit, chờ 5 giây...")
                 await asyncio.sleep(5)
-                resp = await client.post(url, json=payload)
+                resp = await client.post(url, json=payload, headers=_gemini_headers())
 
             if resp.status_code in (400, 403):
-                err = resp.json()
-                msg = err.get("error", {}).get("message", "Unknown error")
+                msg = _extract_google_error(resp)
                 print(f"  ❌ Imagen error: {msg}")
                 return None
 

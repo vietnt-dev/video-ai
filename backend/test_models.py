@@ -1,8 +1,12 @@
 import os
 from openai import OpenAI
 
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    raise SystemExit("Set GEMINI_API_KEY before running this script.")
+
 client = OpenAI(
-    api_key="AIzaSyCNgeuMfwXtTGX9HfN1LDglAU-1MY5EO20",
+    api_key=api_key,
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 
