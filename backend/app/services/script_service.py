@@ -12,34 +12,40 @@ from app.services.style_prompts import get_style_system_prompt, get_style_config
 # Base format — áp dụng cho mọi style và provider
 BASE_FORMAT_PROMPT = """
 QUY TẮC BẮT BUỘC CHO VOICE-OVER SHORTS:
-- Viết như người Việt nói thật, không viết như bài văn hoặc quảng cáo.
-- Mỗi câu 5-10 từ. Một ý, một câu. Nhịp rất nhanh, dễ đọc thành tiếng.
-- Mật độ thông tin cao: mỗi câu phải thêm một dữ kiện, ví dụ, cú lật hoặc hành động.
-- Hook phải vào thẳng vấn đề ngay câu đầu, không dẫn nhập.
-- Video phải có một "đường dây căng": vấn đề → cú lật → ví dụ đời thật → payoff → hành động.
-- Mỗi segment phải làm người xem muốn nghe câu tiếp theo, không được liệt kê kiến thức đều đều.
-- Mỗi segment phải có ít nhất một trong các yếu tố: mâu thuẫn, ví dụ cụ thể, con số đời thường, hình ảnh quen thuộc, hoặc câu lật kỳ vọng.
-- Ưu tiên ví dụ rất cụ thể của người Việt: lương, tiền chợ, hóa đơn, điện thoại, gia đình, công sở, giấc ngủ, bữa ăn.
-- Không viết kiểu sách giáo khoa: "đó chính là", "lý do là", "tóm lại", "đầu tiên", "tiếp theo", "ngoài ra".
-- Không dùng các câu sáo rỗng: "Trong video này", "Hãy cùng khám phá", "Bạn có biết rằng", "bí mật tuyệt vời", "hành trình".
-- Không dùng giọng dịch máy, không dùng từ Hán-Việt nặng nếu có từ phổ thông hơn.
+- Viết như người Việt nói chuyện hàng ngày ngoài đời thực, KHÔNG viết như bài văn, bài báo hay quảng cáo.
+- Dùng từ ngữ đời thường, gần gũi, bắt trend và cực kỳ tự nhiên. Cho phép dùng từ lóng văn phòng, công nghệ nếu phù hợp ngữ cảnh (ví dụ: gánh team, ăn hành, auto xịn, out trình, bay màu, quay xe, bị sếp dí, bắt bài, tạ...).
+- Mỗi câu 5-10 từ. Một ý, một câu. Nhịp rất nhanh, dễ đọc thành tiếng, không dùng câu ghép phức tạp.
+- Mật độ thông tin cao: mỗi câu phải thêm một dữ kiện mới, một cú lật hoặc một hành động thực tế.
+- Hook phải vào thẳng vấn đề ngay từ giây đầu tiên bằng một câu giật gân hoặc mâu thuẫn lớn, tuyệt đối không dẫn nhập, không giới thiệu.
+- Video phải có một "đường dây căng": vấn đề kịch tính → cú lật bất ngờ → ví dụ đời thật → giải thích bản chất → hành động thực tế.
+- Mỗi segment phải làm người xem tò mò muốn nghe câu tiếp theo, tuyệt đối không liệt kê kiến thức khô khan đều đều kiểu sách giáo khoa.
+- Mỗi segment phải có ít nhất một trong các yếu tố: mâu thuẫn trái chiều, ví dụ cụ thể sát sườn, con số thực tế đời thường, hoặc câu lật ngược kỳ vọng.
+- Ưu tiên ví dụ rất cụ thể của người Việt: lương 5 triệu, tiền nhà, hóa đơn điện nước, đi trễ bị phạt, sếp dí deadline, lướt điện thoại 2h sáng, nhịn ăn sáng.
+- Nghiêm cấm viết kiểu sách giáo khoa/dịch thuật: "đó chính là", "lý do là", "tóm lại", "đầu tiên", "tiếp theo", "ngoài ra", "chúng ta cần phải", "sau đây".
+- Nghiêm cấm dùng các câu sáo rỗng: "Trong video này", "Hãy cùng khám phá", "Bạn có biết rằng", "bí mật tuyệt vời", "hành trình".
+- Không dùng giọng dịch máy, không dùng từ Hán-Việt nặng nề nếu có từ thuần Việt phổ thông hơn.
 - Không nhồi emoji trong narration. Emoji chỉ dùng trong title nếu cần.
-- Mỗi segment phải tạo được caption ngắn, mạnh, dễ hiểu khi đọc trên màn hình điện thoại.
+- Mỗi segment phải tạo được slide content cực kỳ ngắn gọn, sắc bén để hiển thị trên màn hình điện thoại.
 - Nếu chủ đề thuộc sức khỏe, tài chính, tử vi hoặc tâm lý: tránh cam kết chắc chắn, tránh chẩn đoán, tránh hứa kết quả.
 - Visual phải là cảnh quay cụ thể bám sát đúng câu thoại, không dùng cảnh chung chung như landscape, people walking, abstract background.
 - Visual_prompt phải bắt đầu bằng chủ thể chính có thể tìm thấy trên stock footage, không bắt đầu bằng động từ mơ hồ như visualizing, showing, representing.
 
 Trả về JSON theo đúng format sau, KHÔNG thêm bất kỳ text nào khác:
 {
-  "hook": "Câu hook 3 giây đầu — ngắn, thẳng, gây tò mò ngay lập tức",
+  "hook": "Câu hook 3 giây đầu — ngắn, giật gân, tạo tò mò ngay lập tức (ví dụ: Dừng lại! Đừng..., Sự thật phũ phàng về...)",
   "segments": [
     {
       "text": "Nội dung đọc — tiếng Việt tự nhiên, như lời nói, câu ngắn 5-10 từ",
       "visual_prompt": "Specific English description for Pexels/Imagen stock footage search",
-      "duration": 4.5
+      "duration": 4.5,
+      "slide": {
+        "layout": "title | compare | list | card",
+        "title": "TIÊU ĐỀ SLIDE (ngắn gọn, in hoa, max 4 từ)",
+        "content": ["Nội dung dòng 1", "Nội dung dòng 2"]
+      }
     }
   ],
-  "call_to_action": "CTA cuối video — ngắn, tự nhiên, kêu gọi tương tác cụ thể",
+  "call_to_action": "CTA cuối video — ngắn, tự nhiên, kêu giúp bình luận hoặc click link",
   "total_duration": 32.0,
   "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
   "suggested_title": "Tiêu đề YouTube SEO ≤70 ký tự, có emoji, có keyword chính",
@@ -48,20 +54,19 @@ Trả về JSON theo đúng format sau, KHÔNG thêm bất kỳ text nào khác:
 
 RETENTION_SCRIPT_PROMPT = """
 CẤU TRÚC GIỮ CHÂN BẮT BUỘC:
-1. Hook: nói thẳng nỗi đau/nghịch lý, không giải thích ngay.
-2. Segment 1: phá một niềm tin cũ hoặc chỉ ra sai lầm người xem đang mắc.
-3. Segment 2: đưa ví dụ đời thật rất cụ thể, càng gần đời sống Việt Nam càng tốt.
-4. Segment 3: giải thích ngắn vì sao chuyện đó xảy ra.
-5. Segment 4: đưa một cú lật hoặc nhận định khiến người xem thấy "à ra vậy".
-6. Segment 5: cho hành động nhỏ, làm được ngay hôm nay.
-7. CTA: gợi bình luận/lưu video bằng một câu tự nhiên.
+1. Hook: Cực kỳ giật gân, tát thẳng vào nỗi đau hoặc chỉ ra một nghịch lý cực lớn (ví dụ: Dừng lại! Sếp bạn đang..., Cú lừa lớn nhất khi...).
+2. Segment 1: Đập tan một niềm tin sai lầm cũ của người xem.
+3. Segment 2: Đưa ra ví dụ thực tế cực kỳ cụ thể tại Việt Nam (Ví dụ: cày cuốc 12 tiếng vẫn nghèo, bị sếp mắng oan...).
+4. Segment 3: Lý giải ngắn gọn bản chất/nguyên nhân ẩn sau (nhấn mạnh yếu tố bất ngờ).
+5. Segment 4: Cú lật (Twist) hoặc bài học sắc bén giúp họ "quay xe" nhận thức.
+6. Segment 5: Hành động nhỏ, cụ thể làm được ngay lập tức để thay đổi.
+7. CTA: Câu chốt kích thích bình luận tranh cãi hoặc chia sẻ một cách tự nhiên nhất.
 
 NHỊP KỂ:
-- Mỗi segment chỉ 1 câu mạnh hoặc 2 câu rất ngắn.
-- Không dùng giọng "dạy học". Hãy nói như đang chỉ ra một điều người xem vừa nhận ra về chính mình.
-- Không kết thúc segment bằng ý đã trọn vẹn quá sớm; hãy để còn lý do nghe tiếp.
-- Tổng video nên 25-35 giây. Nếu chủ đề phức tạp, chọn một góc hẹp, không giải thích tất cả.
-- Mục tiêu: truyền nhiều ý nhất có thể, nhưng không nhồi câu rỗng.
+- Mỗi segment chỉ gồm 1 câu thoại đắt giá, hoặc tối đa 2 câu siêu ngắn.
+- Tuyệt đối không dùng giọng giáo điều dạy đời. Hãy đóng vai một người bạn ranh ma đang chỉ ra góc khuất mà họ chưa từng nghĩ tới.
+- Giữ sự tò mò xuyên suốt: câu trước phải làm bàn đạp để câu sau nổ ra, không được kết thúc ý quá sớm.
+- Tổng thời lượng video khoảng 25-35 giây (80-125 từ). Chỉ tập trung vào một luận điểm duy nhất, không lan man giải thích nhiều.
 """
 
 
@@ -135,14 +140,26 @@ def score_hook(hook: str) -> tuple[int, list[str]]:
 
 
 def build_video_script(raw: dict, topic: str) -> VideoScript:
-    segments = [
-        ScriptSegment(
-            text=seg["text"],
-            visual_prompt=seg["visual_prompt"],
-            duration=float(seg.get("duration", 8.0)),
+    from app.models import SlideContent
+    
+    segments = []
+    for seg in raw.get("segments", []):
+        slide_data = None
+        if "slide" in seg and seg["slide"]:
+            slide_raw = seg["slide"]
+            slide_data = SlideContent(
+                layout=slide_raw.get("layout", "card"),
+                title=slide_raw.get("title", ""),
+                content=slide_raw.get("content", [])
+            )
+        segments.append(
+            ScriptSegment(
+                text=seg["text"],
+                visual_prompt=seg["visual_prompt"],
+                duration=float(seg.get("duration", 8.0)),
+                slide=slide_data
+            )
         )
-        for seg in raw.get("segments", [])
-    ]
 
     return VideoScript(
         hook=raw["hook"],
@@ -306,6 +323,7 @@ def score_script(script: VideoScript) -> tuple[int, list[str]]:
 
 def build_fallback_script(topic: str, style: str = "engaging") -> VideoScript:
     """Fallback tối thiểu để job không fail khi provider trả JSON hỏng liên tục."""
+    from app.models import SlideContent
     return VideoScript(
         hook=f"Bạn tưởng {topic} đơn giản? Sai lầm nằm ở đây.",
         segments=[
@@ -313,26 +331,31 @@ def build_fallback_script(topic: str, style: str = "engaging") -> VideoScript:
                 text="Không phải bạn thiếu cố gắng, mà đang nhìn sai vấn đề.",
                 visual_prompt="Vietnamese person looking confused at phone, close up, realistic",
                 duration=4.5,
+                slide=SlideContent(layout="title", title="SAI LẦM LỚN", content=["Bạn nhìn sai vấn đề"])
             ),
             ScriptSegment(
                 text="Ví dụ, chỉ một thói quen nhỏ mỗi ngày cũng kéo kết quả đi xa.",
                 visual_prompt="Vietnamese office worker repeating daily habit, desk, close up",
                 duration=5.0,
+                slide=SlideContent(layout="card", title="VÍ DỤ", content=["Thói quen nhỏ kéo kết quả đi xa"])
             ),
             ScriptSegment(
                 text="Vấn đề là não thích đường dễ, dù đường đó làm bạn chậm lại.",
                 visual_prompt="Tired Vietnamese person choosing easy option, phone distraction",
                 duration=5.0,
+                slide=SlideContent(layout="compare", title="VẤN ĐỀ", content=["Não thích đường dễ", "Kết quả bị chậm lại"])
             ),
             ScriptSegment(
                 text="Cú lật là bạn không cần đổi hết, chỉ cần đổi điểm bắt đầu.",
                 visual_prompt="Vietnamese person writing one small plan, notebook, morning light",
                 duration=5.0,
+                slide=SlideContent(layout="card", title="CÚ LẬT", content=["Đổi điểm bắt đầu"])
             ),
             ScriptSegment(
                 text="Hôm nay, chọn một việc nhỏ và làm nó trong 5 phút.",
                 visual_prompt="Phone timer five minutes, Vietnamese person starting focused work",
                 duration=4.5,
+                slide=SlideContent(layout="list", title="HÀNH ĐỘNG", content=["Chọn một việc nhỏ", "Làm trong 5 phút"])
             ),
         ],
         call_to_action="Bạn từng mắc lỗi này chưa? Bình luận thật nhé.",
@@ -383,6 +406,7 @@ async def generate_script(
     topic: str,
     style: str = "engaging",
     language: str = "vi",
+    media_source: str = "hybrid",
 ) -> VideoScript:
     """
     Tạo kịch bản video từ chủ đề.
@@ -400,9 +424,23 @@ async def generate_script(
         else "Write in English — natural, conversational tone"
     )
 
+    slide_instruction = ""
+    if media_source == "slide":
+        slide_instruction = """
+QUY TẮC BẮT BUỘC CHO TRÌNH CHIẾU SLIDE (Mỗi segment phải chứa thêm trường "slide"):
+- "slide" object gồm:
+  1. "layout": "title" (slide tiêu đề mở đầu), "compare" (slide so sánh 2 cột), "list" (slide danh sách 2-3 gạch đầu dòng), hoặc "card" (slide thẻ thông tin lớn ở giữa).
+  2. "title": Tiêu đề cực ngắn của slide (in hoa, viết gọn, max 4 từ, ví dụ: "LÀM VIỆC", "SAI LẦM").
+  3. "content": Mảng chứa các chuỗi nội dung chính hiển thị trên slide (phải viết hoa câu ngắn gọn, súc tích).
+     - Với layout "compare": mảng bắt buộc có đúng 2 phần tử dạng ["Ý Cũ/Sai", "Ý Mới/Đúng"]. Ví dụ: ["Tự gõ phím mất 2h", "AI viết trong 10s"].
+     - Với layout "list": mảng chứa từ 2 đến 3 phần tử đại diện cho các gạch đầu dòng. Ví dụ: ["Tiết kiệm 80% thời gian", "Tự động hóa hoàn toàn"].
+     - Với layout "title" hoặc "card": mảng chứa 1 phần tử đại diện cho thông tin nổi bật.
+"""
+
     base_user_prompt = f"""Chủ đề: {topic}
 Phong cách: {style_config.get('label', style)}
 {lang_note}
+{slide_instruction}
 
 Tạo kịch bản video ngắn 25-35 giây với:
 - Hook 3 giây đầu: một câu ngắn, mạnh, đúng công thức của phong cách này, không giải thích hết

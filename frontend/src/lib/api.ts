@@ -6,6 +6,7 @@ export interface GenerateRequest {
     topic: string;
     style?: string;
     language?: "vi" | "en";
+    media_source?: string;
     auto_upload_youtube?: boolean;
     youtube_privacy?: "public" | "unlisted" | "private";
 }

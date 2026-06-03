@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     # Google Gemini (FREE tier: 1500 req/ngày)
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.0-flash"        # script + SEO
+    gemini_model: str = "gemini-2.5-flash"        # script + SEO
     gemini_image_model: str = "imagen-4.0-generate-001"  # tạo ảnh miễn phí (chuẩn 2026)
 
     # AI Provider: "openai" hoặc "gemini" (KHUYẾN NGHỊ: gemini vì free)

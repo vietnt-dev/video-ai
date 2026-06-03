@@ -243,6 +243,9 @@ async def fetch_media_for_segments(
     job_id: str,
     durations: list[float] = None,
     style: str = "engaging",
+    media_source: str = "hybrid",
+    script = None,
+    topic: str = "",
 ) -> list[str | None]:
     """
     Tải/tạo video cho từng segment theo strategy được cấu hình.
@@ -252,6 +255,9 @@ async def fetch_media_for_segments(
         job_id        : ID job để tạo thư mục riêng
         durations     : thời lượng mỗi segment (cần cho Ken Burns)
         style         : phong cách video (ảnh hưởng AI image prompt)
+        media_source  : nguồn video (hybrid, pexels, ai_image, slide)
+        script        : kịch bản đầy đủ (chứa dữ liệu slide)
+        topic         : chủ đề của video (để viết tiêu đề slide)
 
     Returns: danh sách đường dẫn file video (None nếu thất bại)
     """
@@ -261,7 +267,7 @@ async def fetch_media_for_segments(
     if durations is None:
         durations = [8.0] * len(visual_prompts)
 
-    source = settings.media_source
+    source = media_source or settings.media_source
     video_files = []
     success_count = 0
 
@@ -271,7 +277,34 @@ async def fetch_media_for_segments(
 
         success = False
 
-        if source == "pexels":
+        if source == "slide":
+            from app.services.slide_service import draw_slide_image, convert_slide_image_to_video
+            from app.models import SlideContent
+
+            slide_data = None
+            if i == 0 and script:
+                slide_data = SlideContent(layout="title", title="GIỚI THIỆU", content=[script.hook])
+            elif i == len(visual_prompts) - 1 and script:
+                slide_data = SlideContent(layout="card", title="HÀNH ĐỘNG", content=[script.call_to_action])
+            elif script and (i - 1) < len(script.segments):
+                seg = script.segments[i - 1]
+                if hasattr(seg, "slide") and seg.slide:
+                    slide_data = seg.slide
+                else:
+                    slide_data = SlideContent(layout="card", title="THÔNG TIN", content=[seg.text])
+            else:
+                slide_data = SlideContent(layout="card", title="THÔNG TIN", content=[prompt])
+
+            img_path = str(Path(settings.assets_dir) / "images" / job_id / f"slide_{i:02d}.png")
+            try:
+                draw_slide_image(slide_data, img_path, topic=topic)
+                convert_slide_image_to_video(img_path, duration, output_path)
+                success = True
+            except Exception as e:
+                print(f"  ❌ Slide render failed: {e}")
+                success = False
+
+        elif source == "pexels":
             success = await _try_pexels(prompt, output_path, i)
 
         elif source == "ai_image":

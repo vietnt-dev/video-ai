@@ -55,12 +55,12 @@ export default function Dashboard() {
         return () => { if (pollRef.current) clearInterval(pollRef.current); };
     }, [jobId, appState]);
 
-    const handleGenerate = async (topic: string, style: string, language: string, meta?: { title?: string; description?: string; tags?: string[] }) => {
+    const handleGenerate = async (topic: string, style: string, language: string, mediaSource: string, meta?: { title?: string; description?: string; tags?: string[] }) => {
         setError(null); setJobStatus(null); setJobId(null);
         setScriptMeta(meta || {}); setSeoData(null); setSelectedTitle("");
         setAppState("generating");
         try {
-            const res = await generateVideo({ topic, style, language: language as "vi" | "en", auto_upload_youtube: autoUploadYT, youtube_privacy: ytPrivacy });
+            const res = await generateVideo({ topic, style, language: language as "vi" | "en", media_source: mediaSource, auto_upload_youtube: autoUploadYT, youtube_privacy: ytPrivacy });
             setJobId(res.job_id);
         } catch (err: any) { setAppState("failed"); setError(err.message || "Không thể kết nối server"); }
     };

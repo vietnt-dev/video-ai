@@ -37,6 +37,7 @@ async def generate_video(request: GenerateVideoRequest):
             request.language,
             request.auto_upload_youtube,
             request.youtube_privacy,
+            request.media_source,
         ],
         task_id=job_id,
     )

@@ -14,15 +14,23 @@ class GenerateVideoRequest(BaseModel):
     topic: str
     style: Optional[str] = "engaging"  # engaging, educational, funny
     language: Optional[str] = "vi"     # vi, en
+    media_source: Optional[str] = "hybrid"  # hybrid, pexels, ai_image, slide
     # Tự động upload YouTube sau khi render xong
     auto_upload_youtube: Optional[bool] = False
     youtube_privacy: Optional[str] = "public"  # public | unlisted | private
+
+
+class SlideContent(BaseModel):
+    layout: str  # "title", "compare", "list", "card"
+    title: str
+    content: List[str]
 
 
 class ScriptSegment(BaseModel):
     text: str
     visual_prompt: str
     duration: float
+    slide: Optional[SlideContent] = None
 
 
 class VideoScript(BaseModel):

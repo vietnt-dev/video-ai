@@ -12,8 +12,8 @@ FONT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Google Fonts - Roboto (hỗ trợ Latin Extended / tiếng Việt)
 FONTS = {
-    "Roboto-Bold.ttf": "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Bold.ttf",
-    "Roboto-Black.ttf": "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Black.ttf",
+    "Roboto-Bold.ttf": "https://raw.githubusercontent.com/googlefonts/roboto/main/src/hinted/Roboto-Bold.ttf",
+    "Roboto-Black.ttf": "https://raw.githubusercontent.com/googlefonts/roboto/main/src/hinted/Roboto-Black.ttf",
 }
 
 print("📥 Đang tải font Roboto (hỗ trợ tiếng Việt)...")

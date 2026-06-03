@@ -44,6 +44,7 @@ def generate_video_task(
     language: str = "vi",
     auto_upload_youtube: bool = False,
     youtube_privacy: str = "public",
+    media_source: str = "hybrid",
 ):
     """
     Main task: Orchestrate toàn bộ pipeline tạo video.
@@ -62,7 +63,7 @@ def generate_video_task(
         result = loop.run_until_complete(
             _run_pipeline(
                 self, job_id, topic, style, language,
-                auto_upload_youtube, youtube_privacy,
+                auto_upload_youtube, youtube_privacy, media_source
             )
         )
         return result
@@ -81,6 +82,7 @@ async def _run_pipeline(
     language: str,
     auto_upload_youtube: bool,
     youtube_privacy: str,
+    media_source: str,
 ) -> dict:
     """Async pipeline chính."""
     from app.services.script_service import generate_script
@@ -92,7 +94,7 @@ async def _run_pipeline(
     update_job_progress(job_id, 5, "🤖 Đang viết kịch bản với GPT-4o...")
     t0 = time.time()
     try:
-        script: VideoScript = await generate_script(topic, style, language)
+        script: VideoScript = await generate_script(topic, style, language, media_source)
     except Exception as e:
         err_str = str(e)
         if "insufficient_quota" in err_str or "429" in err_str:
@@ -178,7 +180,8 @@ async def _run_pipeline(
         "ai_image": "AI image + motion",
         "ai_image_sd": "Stable Diffusion AI",
         "hybrid": "Pexels + AI fallback",
-    }.get(settings.media_source, "media")
+        "slide": "Slide bài giảng",
+    }.get(media_source or settings.media_source, "media")
     update_job_progress(job_id, 45, f"🎨 Đang tạo hình ảnh/video ({source_label})...")
 
     video_files = await fetch_media_for_segments(
@@ -186,6 +189,9 @@ async def _run_pipeline(
         job_id=job_id,
         durations=all_durations,
         style=style,
+        media_source=media_source,
+        script=script,
+        topic=topic,
     )
 
     # ── Step 4: Compose Video ────────────────────────────────────────
