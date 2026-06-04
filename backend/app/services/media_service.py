@@ -11,7 +11,6 @@ import asyncio
 import httpx
 import os
 import re
-import subprocess
 from pathlib import Path
 from app.config import settings
 
@@ -121,13 +120,19 @@ async def _download_file(url: str, output_path: str) -> bool:
             timeout=httpx.Timeout(connect=10.0, read=90.0, write=30.0, pool=5.0),
             follow_redirects=True,
         ) as client:
-            resp = await client.get(url)
-            resp.raise_for_status()
-            content = resp.content
-            if len(content) < 10_000:
+            async with client.stream("GET", url) as resp:
+                resp.raise_for_status()
+                bytes_written = 0
+                with open(output_path, "wb") as f:
+                    async for chunk in resp.aiter_bytes(chunk_size=1024 * 512):
+                        if not chunk:
+                            continue
+                        f.write(chunk)
+                        bytes_written += len(chunk)
+            if bytes_written < 10_000:
+                if os.path.exists(output_path):
+                    os.remove(output_path)
                 return False
-            with open(output_path, "wb") as f:
-                f.write(content)
         return True
     except Exception as e:
         print(f"  ❌ Download failed: {e}")
@@ -183,7 +188,8 @@ async def _try_ai_image(
 
     # Convert ảnh → video với Ken Burns
     try:
-        image_to_video(
+        await asyncio.to_thread(
+            image_to_video,
             image_path=img_path,
             output_path=video_output_path,
             duration=duration,
@@ -193,46 +199,6 @@ async def _try_ai_image(
         return _is_valid_file(video_output_path)
     except Exception as e:
         print(f"  ❌ Ken Burns error: {e}")
-        return False
-
-
-def _create_fallback_video(output_path: str, duration: float, style: str = "engaging") -> bool:
-    """Tạo nền động tối giản để không bao giờ render ra frame đen."""
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    palette = {
-        "co_nhan": "0x2a2118",
-        "tu_vi": "0x211832",
-        "su_that": "0x261417",
-        "tam_ly": "0x142234",
-        "lam_giau": "0x13271c",
-        "suc_khoe": "0x173022",
-        "tinh_cam": "0x321820",
-        "engaging": "0x241a12",
-        "educational": "0x162638",
-        "funny": "0x302513",
-    }
-    color = palette.get(style, palette["engaging"])
-    filtergraph = (
-        f"color=c={color}:s=1080x1920:d={duration},"
-        "noise=alls=14:allf=t+u,"
-        "eq=contrast=1.08:saturation=1.15,"
-        "format=yuv420p"
-    )
-    cmd = [
-        "ffmpeg", "-y",
-        "-f", "lavfi",
-        "-i", filtergraph,
-        "-r", "24",
-        "-c:v", "libx264",
-        "-preset", "ultrafast",
-        output_path,
-    ]
-
-    try:
-        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        return _is_valid_file(output_path)
-    except Exception as e:
-        print(f"  ❌ Fallback background failed: {e}")
         return False
 
 
@@ -268,24 +234,44 @@ async def fetch_media_for_segments(
         durations = [8.0] * len(visual_prompts)
 
     source = media_source or settings.media_source
-    video_files = []
-    success_count = 0
+    concurrency = max(1, int(settings.media_concurrency or 1))
+    semaphore = asyncio.Semaphore(concurrency)
 
-    for i, (prompt, duration) in enumerate(zip(visual_prompts, durations)):
+    async def process_segment(i: int, prompt: str, duration: float) -> str | None:
         output_path = str(video_dir / f"clip_{i:02d}.mp4")
         print(f"\n[Segment {i+1}/{len(visual_prompts)}] '{prompt[:50]}...' ({duration:.1f}s)")
+
+        if _is_valid_file(output_path):
+            print(f"  ♻️ Segment {i+1}: dùng lại media đã có")
+            return output_path
 
         success = False
 
         if source == "slide":
-            from app.services.slide_service import draw_slide_image, convert_slide_image_to_video
+            from app.services.slide_service import (
+                render_motion_slide_video,
+            )
             from app.models import SlideContent
 
             slide_data = None
             if i == 0 and script:
-                slide_data = SlideContent(layout="title", title="GIỚI THIỆU", content=[script.hook])
+                if style == "motion_tech":
+                    slide_data = SlideContent(
+                        layout="motion_tech",
+                        title="TECH SHORT",
+                        content=[
+                            script.hook,
+                            "Đáng thử",
+                            "Nhanh · Rõ · Có proof",
+                            "$ pnpm run web",
+                            topic,
+                            "Lưu video lại",
+                        ],
+                    )
+                else:
+                    slide_data = SlideContent(layout="title", title="DỪNG LẠI", content=[script.hook])
             elif i == len(visual_prompts) - 1 and script:
-                slide_data = SlideContent(layout="card", title="HÀNH ĐỘNG", content=[script.call_to_action])
+                slide_data = SlideContent(layout="comment_cta", title="BẠN NGHĨ SAO?", content=[script.call_to_action])
             elif script and (i - 1) < len(script.segments):
                 seg = script.segments[i - 1]
                 if hasattr(seg, "slide") and seg.slide:
@@ -295,14 +281,17 @@ async def fetch_media_for_segments(
             else:
                 slide_data = SlideContent(layout="card", title="THÔNG TIN", content=[prompt])
 
-            img_path = str(Path(settings.assets_dir) / "images" / job_id / f"slide_{i:02d}.png")
             try:
-                draw_slide_image(slide_data, img_path, topic=topic)
-                convert_slide_image_to_video(img_path, duration, output_path)
+                await asyncio.to_thread(
+                    render_motion_slide_video,
+                    slide_data,
+                    duration,
+                    output_path,
+                    topic,
+                )
                 success = True
             except Exception as e:
-                print(f"  ❌ Slide render failed: {e}")
-                success = False
+                raise RuntimeError(f"Motion slide render failed at segment {i+1}: {e}") from e
 
         elif source == "pexels":
             success = await _try_pexels(prompt, output_path, i)
@@ -310,7 +299,7 @@ async def fetch_media_for_segments(
         elif source == "ai_image":
             success = await _try_ai_image(prompt, output_path, duration, i, style, "auto")
             if not success:
-                print("  🔄 AI image thất bại → thử Pexels fallback")
+                print("  🔄 AI image thất bại → thử Pexels")
                 success = await _try_pexels(prompt, output_path, i)
 
         elif source == "ai_image_sd":
@@ -327,18 +316,27 @@ async def fetch_media_for_segments(
                 success = await _try_ai_image(prompt, output_path, duration, i, style, "auto")
 
         if success:
-            video_files.append(output_path)
-            success_count += 1
-        else:
-            print(f"  🎛️ Segment {i+1}: dùng fallback background động")
-            if _create_fallback_video(output_path, duration, style):
-                video_files.append(output_path)
-                success_count += 1
-            else:
-                video_files.append(None)
+            return output_path
 
-        # Tránh rate limit
-        await asyncio.sleep(0.5)
+        raise RuntimeError(
+            f"Không tạo được media cho segment {i+1}/{len(visual_prompts)}. "
+            f"source={source}. Hãy kiểm tra PEXELS_API_KEY/GEMINI image/OpenAI image "
+            "hoặc chọn 'Slide Trình Chiếu' để render bằng motion text."
+        )
+
+    async def bounded_process(i: int, prompt: str, duration: float) -> str | None:
+        async with semaphore:
+            result = await process_segment(i, prompt, duration)
+            await asyncio.sleep(0.5)
+            return result
+
+    video_files = await asyncio.gather(
+        *[
+            bounded_process(i, prompt, duration)
+            for i, (prompt, duration) in enumerate(zip(visual_prompts, durations))
+        ]
+    )
+    success_count = sum(1 for path in video_files if path)
 
     print(f"\n📊 Media: {success_count}/{len(visual_prompts)} segments có video/ảnh")
     return video_files

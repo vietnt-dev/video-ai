@@ -44,8 +44,11 @@ def _enhance_prompt_for_shorts(visual_prompt: str, style: str = "engaging") -> s
 
     return (
         f"{visual_prompt}, {modifier}, "
+        f"unexpected but realistic visual metaphor when appropriate, clear tension or contrast, "
         f"single full-frame scene, one continuous image, one main subject, "
+        f"visible human action or concrete object, instantly understandable in one second, "
         f"vertical 9:16 portrait format, professional photography, sharp focus, vibrant colors, "
+        f"authentic Vietnamese context when relevant, not generic stock-photo posing, "
         f"no collage, no split screen, no grid, no panels, no montage, no contact sheet, "
         f"no before and after layout, no multiple photos in one image, "
         f"no text, no subtitles, no logo, no watermark"

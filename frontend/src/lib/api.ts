@@ -41,6 +41,17 @@ export async function generateVideo(data: GenerateRequest): Promise<JobResponse>
     return res.json();
 }
 
+export async function retryVideo(jobId: string): Promise<JobResponse> {
+    const res = await fetch(`${API_BASE}/video/retry/${jobId}`, {
+        method: "POST",
+    });
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Không thể retry job");
+    }
+    return res.json();
+}
+
 export async function getJobStatus(jobId: string): Promise<JobStatus> {
     const res = await fetch(`${API_BASE}/video/status/${jobId}`);
     if (!res.ok) throw new Error("Không thể lấy trạng thái job");

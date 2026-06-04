@@ -8,7 +8,7 @@ import ProgressBar from "@/components/ProgressBar";
 import StepIndicator from "@/components/StepIndicator";
 import YouTubePanel from "@/components/YouTubePanel";
 import SEOPanel from "@/components/SEOPanel";
-import { generateVideo, getJobStatus, type JobStatus, type SEOMetadata } from "@/lib/api";
+import { generateVideo, getJobStatus, retryVideo, type JobStatus, type SEOMetadata } from "@/lib/api";
 
 type AppState = "idle" | "generating" | "completed" | "failed";
 
@@ -69,6 +69,18 @@ export default function Dashboard() {
         setAppState("idle"); setJobId(null); setJobStatus(null);
         setError(null); setScriptMeta({}); setSeoData(null); setSelectedTitle("");
         if (pollRef.current) clearInterval(pollRef.current);
+    };
+
+    const handleRetry = async () => {
+        if (!jobId) return;
+        setError(null);
+        setAppState("generating");
+        try {
+            await retryVideo(jobId);
+        } catch (err: any) {
+            setAppState("failed");
+            setError(err.message || "Không thể retry job");
+        }
     };
 
     const isCompleted = appState === "completed" && !!jobId;
@@ -158,7 +170,12 @@ export default function Dashboard() {
                                 <div className="flex-1 min-w-0">
                                     <p className="text-red-400 font-semibold text-sm">Đã xảy ra lỗi</p>
                                     <p className="text-slate-400 text-xs mt-1 break-words leading-relaxed">{error}</p>
-                                    <button onClick={handleReset} className="mt-2 text-xs text-sky-300 hover:text-sky-200 transition-colors">← Thử lại</button>
+                                    <div className="mt-2 flex flex-wrap gap-3">
+                                        {jobId && (
+                                            <button onClick={handleRetry} className="text-xs text-emerald-300 hover:text-emerald-200 transition-colors">Tiếp tục từ checkpoint</button>
+                                        )}
+                                        <button onClick={handleReset} className="text-xs text-sky-300 hover:text-sky-200 transition-colors">← Tạo mới</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

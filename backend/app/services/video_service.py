@@ -22,6 +22,7 @@ def compose_video(
     output_path: str,
     music_path: Optional[str] = None,
     use_dynamic_captions: bool = True,
+    caption_mode: str = "full",
 ) -> str:
     """
     Sử dụng FFmpeg thuần (C/C++) để ghép nối video, lồng âm thanh và render phụ đề .ass.
@@ -46,7 +47,7 @@ def compose_video(
         else:
             actual_durations.append(est_dur)
 
-    generate_ass_subtitles(script_texts, actual_durations, ass_path)
+    generate_ass_subtitles(script_texts, actual_durations, ass_path, mode=caption_mode)
 
     # 2. Xây dựng bản đồ lệnh FFmpeg (Filtergraph)
     inputs = []
@@ -121,7 +122,8 @@ def compose_video(
     filter_script = ";".join(filter_complex)
 
     # 6. Chạy FFmpeg
-    cpu_count = str(os.cpu_count() or 4)
+    configured_threads = settings.ffmpeg_threads or 2
+    cpu_count = str(max(1, min(configured_threads, os.cpu_count() or configured_threads)))
     cmd = [
         "ffmpeg", "-y",
         *inputs,
@@ -133,6 +135,7 @@ def compose_video(
         "-r", "24",
         "-c:a", "aac",
         "-b:a", "192k",
+        "-movflags", "+faststart",
         "-threads", cpu_count,
         output_path
     ]

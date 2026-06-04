@@ -15,6 +15,32 @@ from app.config import settings
 router = APIRouter(prefix="/api/video", tags=["video"])
 
 
+def _redis_set_json(key: str, payload: dict) -> None:
+    from app.celery_app import celery_app
+
+    celery_app.backend.set(key, json.dumps(payload, ensure_ascii=False))
+    try:
+        celery_app.backend.client.expire(key, settings.job_meta_ttl_seconds)
+    except Exception:
+        pass
+
+
+def _redis_get_json(key: str) -> dict | None:
+    from app.celery_app import celery_app
+
+    raw = celery_app.backend.get(key)
+    if not raw:
+        return None
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        try:
+            celery_app.backend.delete(key)
+        except Exception:
+            pass
+        return None
+
+
 @router.post("/generate", response_model=JobResponse)
 async def generate_video(request: GenerateVideoRequest):
     """
@@ -27,6 +53,8 @@ async def generate_video(request: GenerateVideoRequest):
         raise HTTPException(status_code=400, detail="Topic không được để trống")
 
     job_id = str(uuid.uuid4())
+    request_payload = request.model_dump()
+    _redis_set_json(f"job_request:{job_id}", request_payload)
 
     # Dispatch Celery task
     generate_video_task.apply_async(
@@ -49,6 +77,46 @@ async def generate_video(request: GenerateVideoRequest):
     )
 
 
+@router.post("/retry/{job_id}", response_model=JobResponse)
+async def retry_video(job_id: str):
+    """
+    Chạy lại cùng job_id để pipeline reuse checkpoint/artifacts đã có.
+    """
+    from app.tasks.video_tasks import generate_video_task
+
+    request_payload = _redis_get_json(f"job_request:{job_id}")
+    if not request_payload:
+        raise HTTPException(status_code=404, detail="Không tìm thấy metadata để retry job này")
+
+    _redis_set_json(
+        f"job_meta:{job_id}",
+        {
+            "status": JobStatus.PENDING,
+            "progress": 0,
+            "message": "Job đã được đưa vào hàng đợi retry...",
+        },
+    )
+
+    generate_video_task.apply_async(
+        args=[
+            job_id,
+            request_payload.get("topic", ""),
+            request_payload.get("style", "engaging"),
+            request_payload.get("language", "vi"),
+            request_payload.get("auto_upload_youtube", False),
+            request_payload.get("youtube_privacy", "public"),
+            request_payload.get("media_source", "hybrid"),
+        ],
+        task_id=job_id,
+    )
+
+    return JobResponse(
+        job_id=job_id,
+        status=JobStatus.PENDING,
+        message="Job retry đã được tạo, sẽ tiếp tục từ checkpoint nếu có.",
+    )
+
+
 @router.get("/status/{job_id}", response_model=JobStatusResponse)
 async def get_job_status(job_id: str):
     """
@@ -62,7 +130,14 @@ async def get_job_status(job_id: str):
     meta_raw = celery_app.backend.get(meta_key)
 
     if meta_raw:
-        meta = json.loads(meta_raw)
+        try:
+            meta = json.loads(meta_raw)
+        except json.JSONDecodeError:
+            try:
+                celery_app.backend.delete(meta_key)
+            except Exception:
+                pass
+            raise HTTPException(status_code=500, detail="Job metadata bị hỏng, hãy retry job")
         status = JobStatus(meta.get("status", "processing"))
         progress = meta.get("progress", 0)
         message = meta.get("message", "Đang xử lý...")

@@ -131,6 +131,11 @@ async def tts_edge(
 ELEVENLABS_BASE_URL = "https://api.elevenlabs.io/v1"
 
 
+def _is_valid_audio(path: str, min_size: int = 1_000) -> bool:
+    file_path = Path(path)
+    return file_path.exists() and file_path.stat().st_size >= min_size
+
+
 async def tts_elevenlabs(text: str, output_path: str, voice_id: str = None) -> str:
     """Dùng ElevenLabs API để tạo giọng đọc."""
     voice_id = voice_id or settings.elevenlabs_voice_id
@@ -199,24 +204,37 @@ async def generate_full_narration(
     part_types: list[str] | None = None,
 ) -> list[str]:
     """
-    Tạo audio cho từng đoạn script song song để tăng tốc.
+    Tạo audio cho từng đoạn script với concurrency có giới hạn.
     Returns: danh sách đường dẫn file audio (MP3/WAV)
     """
     audio_dir = f"{settings.assets_dir}/audio/{job_id}"
     Path(audio_dir).mkdir(parents=True, exist_ok=True)
 
-    # Tạo audio tuần tự để tránh bị Microsoft block (gây lỗi NoAudioReceived)
-    output_paths = []
-    for i, text in enumerate(script_parts):
+    concurrency = max(1, int(settings.tts_concurrency or 1))
+    semaphore = asyncio.Semaphore(concurrency)
+
+    async def synthesize_part(i: int, text: str) -> str:
         part = part_types[i] if part_types and i < len(part_types) else "body"
         output_path = f"{audio_dir}/segment_{i:02d}.mp3"
-        output_paths.append(output_path)
-        # Thêm retry logic đơn giản
+
+        if _is_valid_audio(output_path):
+            print(f"  ♻️ TTS segment {i:02d}: dùng lại audio đã có")
+            return output_path
+
         try:
             await text_to_speech(text, output_path, language, style=style, part=part)
         except Exception as e:
             print(f"Lỗi TTS lần 1, thử lại: {e}")
             await asyncio.sleep(2)
             await text_to_speech(text, output_path, language, style=style, part=part)
-            
+
+        return output_path
+
+    async def bounded_synthesize(i: int, text: str) -> str:
+        async with semaphore:
+            return await synthesize_part(i, text)
+
+    output_paths = await asyncio.gather(
+        *[bounded_synthesize(i, text) for i, text in enumerate(script_parts)]
+    )
     return output_paths

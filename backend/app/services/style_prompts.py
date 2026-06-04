@@ -33,12 +33,12 @@ NGUYÊN TẮC:
 VISUAL STYLE: Vietnamese temple, old books, calligraphy, candlelight, misty mountains, quiet village, warm cinematic light
 TRÁNH: ngôn ngữ quá học thuật, trích dẫn sai lịch sử, nội dung mê tín, giọng răn dạy nặng nề""",
         "example_topics": [
-            "Cổ nhân dạy về tiền bạc và hạnh phúc",
-            "Lời dạy của người xưa về chọn bạn mà chơi",
-            "Bí quyết sống thọ của cổ nhân Việt",
-            "Cổ nhân dạy cách đối nhân xử thế",
-            "Triết lý sống của người xưa về thành công",
-            "Lời cổ nhân về hôn nhân và gia đình",
+            "Cổ nhân có một lời dạy về tiền bạc mà nhiều người hiểu sai",
+            "Sai lầm khi chọn bạn mà người xưa đã cảnh báo từ lâu",
+            "Bí quyết sống thọ của người xưa không nằm ở thuốc bổ",
+            "Một quy tắc đối nhân xử thế giúp tránh mất lòng người",
+            "Người xưa không theo đuổi thành công theo cách bạn nghĩ",
+            "Lời cổ nhân về hôn nhân nghe cũ nhưng vẫn đúng hôm nay",
         ],
     },
 
@@ -65,12 +65,12 @@ NGUYÊN TẮC:
 VISUAL STYLE: bầu trời đêm đầy sao, bàn tay, la bàn phong thủy, nến đỏ, hoa sen, màu tím/vàng huyền bí
 TRÁNH: phán đoán tiêu cực gây lo lắng, nội dung mê tín cực đoan, cam kết chắc chắn về tương lai, yêu cầu thông tin cá nhân nhạy cảm""",
         "example_topics": [
-            "Người sinh tháng 3 có vận mệnh đặc biệt",
-            "3 đường chỉ tay của người phú quý",
-            "Phong thủy phòng ngủ thu hút tài lộc",
-            "Tử vi 12 con giáp năm 2025",
-            "Dấu hiệu trên khuôn mặt tiết lộ tính cách",
-            "Số điện thoại hợp mệnh mang lại may mắn",
+            "Một đặc điểm nhỏ trên bàn tay thường bị nhiều người bỏ qua",
+            "Người sinh tháng 3 thường có một điểm tính cách rất lạ",
+            "Sai lầm phong thủy phòng ngủ khiến bạn khó nghỉ ngơi",
+            "Dấu hiệu trên khuôn mặt tiết lộ cách bạn xử lý áp lực",
+            "Vì sao nhiều người chọn số đẹp nhưng vẫn không thấy may mắn",
+            "Một thói quen hằng ngày ảnh hưởng vận khí nhiều hơn vật phẩm",
         ],
     },
 
@@ -97,11 +97,12 @@ NGUYÊN TẮC:
 VISUAL STYLE: infographic style, cận cảnh chi tiết thú vị, thí nghiệm khoa học, thiên nhiên kỳ lạ
 TRÁNH: thông tin sai, clickbait không có nội dung, nội dung gây hoang mang""",
         "example_topics": [
-            "Sự thật về não người mà trường học không dạy",
-            "Tại sao người Nhật sống thọ nhất thế giới",
-            "Sự thật về giấc ngủ mà 99% người không biết",
-            "Những điều bạn làm hàng ngày đang hại sức khỏe",
-            "Sự thật về tiền bạc mà người giàu biết còn người nghèo không",
+            "Vì sao não bạn nghiện video ngắn nhanh hơn bạn nghĩ",
+            "Sự thật về giấc ngủ mà nhiều người trẻ đang bỏ qua",
+            "Một thói quen hằng ngày đang âm thầm làm bạn kém tập trung",
+            "Bạn tưởng trí nhớ kém do tuổi tác nhưng lý do thật khác hơn",
+            "Sự thật về dopamine khiến bạn khó rời điện thoại",
+            "Điều trường học ít dạy về cách não học một kỹ năng mới",
         ],
     },
 
@@ -128,11 +129,12 @@ NGUYÊN TẮC:
 VISUAL STYLE: người đang suy nghĩ, não bộ, biểu đồ đơn giản, cảnh làm việc tập trung, thiên nhiên yên tĩnh
 TRÁNH: lời khuyên chung chung, toxic positivity, chẩn đoán tâm lý, nội dung không có căn cứ""",
         "example_topics": [
-            "Tại sao bạn trì hoãn và cách dừng lại ngay hôm nay",
-            "Hiệu ứng tâm lý khiến bạn tiêu tiền không kiểm soát",
-            "Cách não bộ tạo thói quen và cách thay đổi",
-            "Tại sao người thông minh thường cô đơn hơn",
-            "Kỹ thuật 5 giây thay đổi cuộc đời của Mel Robbins",
+            "Tại sao bạn biết phải làm nhưng vẫn cứ trì hoãn",
+            "Hiệu ứng tâm lý khiến bạn tiêu tiền rồi mới hối hận",
+            "Cách não tạo thói quen xấu chỉ bằng một phần thưởng nhỏ",
+            "Vì sao người thông minh vẫn ra quyết định rất tệ",
+            "Một mẹo 5 giây giúp bạn thoát khỏi vòng trì hoãn",
+            "Bạn tưởng mình lười nhưng thật ra não đang né đau",
         ],
     },
 
@@ -159,11 +161,12 @@ NGUYÊN TẮC:
 VISUAL STYLE: tiền mặt, biểu đồ tăng trưởng, người thành công, văn phòng hiện đại, xe hơi/nhà đẹp
 TRÁNH: hứa hẹn làm giàu nhanh, scheme đa cấp, khuyến nghị mua/bán cụ thể, đầu tư rủi ro cao không cảnh báo""",
         "example_topics": [
-            "Quy tắc 50-30-20 quản lý tiền lương người Việt",
-            "Cách đầu tư 1 triệu/tháng để có 1 tỷ sau 10 năm",
-            "Sai lầm tài chính của người Việt ở độ tuổi 20-30",
-            "Cách người giàu nghĩ về tiền khác người nghèo",
-            "5 nguồn thu nhập thụ động phù hợp người Việt",
+            "Sai lầm tiền bạc khiến nhiều người trẻ lương cao vẫn hết tiền",
+            "Vì sao quy tắc 50-30-20 không hợp với mọi người Việt",
+            "Bạn tưởng tiết kiệm là giàu nhưng thiếu bước này vẫn thua",
+            "Một lỗi mua sắm nhỏ đang ăn mất cả tháng lương của bạn",
+            "Người giàu không nghĩ về tiền theo cách người mới đi làm nghĩ",
+            "Cách bắt đầu đầu tư nhỏ mà không tự biến mình thành con bạc",
         ],
     },
 
@@ -190,11 +193,12 @@ NGUYÊN TẮC:
 VISUAL STYLE: rau củ quả tươi, bếp Việt, thảo dược, người khỏe mạnh vận động, thiên nhiên xanh
 TRÁNH: chữa bệnh không có căn cứ, thay thế thuốc điều trị, liều lượng nguy hiểm, thông tin y tế sai""",
         "example_topics": [
-            "Gừng nghệ mật ong — bài thuốc vàng của người Việt",
-            "Tại sao người Việt xưa ít bị ung thư hơn bây giờ",
-            "5 loại rau Việt Nam tốt hơn thuốc bổ đắt tiền",
-            "Bài thuốc dân gian trị mất ngủ không cần thuốc",
-            "Thói quen ăn uống của người Việt thọ 100 tuổi",
+            "Một thói quen trước khi ngủ đang phá chất lượng giấc ngủ",
+            "Bạn tưởng uống nhiều nước luôn tốt nhưng có một lỗi phổ biến",
+            "Loại rau quen thuộc trong mâm cơm Việt có lợi hơn bạn nghĩ",
+            "Vì sao càng cố ngủ sớm bạn càng khó ngủ hơn",
+            "Một sai lầm ăn sáng khiến bạn nhanh đói và mệt hơn",
+            "Bài thuốc dân gian nào nên cẩn thận trước khi tin",
         ],
     },
 
@@ -221,11 +225,12 @@ NGUYÊN TẮC:
 VISUAL STYLE: cặp đôi hạnh phúc, gia đình sum họp, bữa cơm Việt, khoảnh khắc cảm xúc
 TRÁNH: nội dung kích động chia tay/ly hôn, phán xét lối sống, thao túng cảm xúc, nội dung 18+""",
         "example_topics": [
-            "Dấu hiệu người đó yêu bạn thật lòng",
-            "Tại sao đàn ông Việt ngại nói yêu",
-            "Cách nói chuyện với cha mẹ về chuyện hôn nhân",
-            "Bí quyết hôn nhân bền vững của các cụ ngày xưa",
-            "Sai lầm nuôi dạy con mà cha mẹ Việt hay mắc",
+            "Dấu hiệu người đó cần bạn chứ chưa chắc yêu bạn",
+            "Tại sao nhiều người Việt ngại nói yêu dù rất quan tâm",
+            "Một câu nói của cha mẹ vô tình làm con xa cách hơn",
+            "Sai lầm hôn nhân không ồn ào nhưng làm tình cảm cạn dần",
+            "Vì sao càng khuyên con nhiều con càng không nghe",
+            "Điều các cặp đôi hay né nhưng quyết định mối quan hệ",
         ],
     },
 
@@ -252,10 +257,12 @@ NGUYÊN TẮC:
 6. Phù hợp văn hóa và tâm lý người Việt
 TRÁNH: clickbait rỗng, mở bài dài, thông tin gây sốc nhưng không có giá trị""",
         "example_topics": [
-            "5 sự thật về não người mà bạn chưa biết",
-            "Cách kiếm tiền online năm 2025",
-            "Bí quyết ngủ ngon trong 5 phút",
-            "Tại sao người giàu không làm việc chăm chỉ hơn",
+            "Sai lầm lớn nhất khi dùng ChatGPT để học",
+            "Vì sao AI không cướp việc của bạn nhưng người biết AI thì có thể",
+            "5 giây đầu quyết định video có viral không như thế nào",
+            "Một thói quen nhỏ đang phá hủy khả năng tập trung",
+            "Vì sao bạn càng xem Shorts càng khó làm việc sâu",
+            "Công nghệ đang âm thầm thay đổi cách bạn kiếm tiền",
         ],
     },
 
@@ -276,9 +283,11 @@ NGUYÊN TẮC:
 4. Tóm tắt điểm chính cuối video
 5. CTA: "Save lại để học sau" """,
         "example_topics": [
-            "Tại sao bầu trời màu xanh — giải thích đơn giản",
-            "Lạm phát là gì và ảnh hưởng đến bạn thế nào",
-            "Cách internet hoạt động trong 60 giây",
+            "Lạm phát đang lấy tiền của bạn theo cách rất khó thấy",
+            "Internet hoạt động thế nào trong một ví dụ 60 giây",
+            "Tại sao bầu trời màu xanh nhưng hoàng hôn lại đỏ",
+            "Vì sao pin điện thoại chai nhanh hơn bạn nghĩ",
+            "Một ví dụ đơn giản giúp hiểu AI tạo sinh hoạt động thế nào",
         ],
     },
 
@@ -299,9 +308,51 @@ NGUYÊN TẮC:
 4. Kết thúc bằng twist bất ngờ hoặc punchline
 5. CTA: "Tag người bạn muốn xem cái này" """,
         "example_topics": [
-            "Những kiểu người Việt hay gặp ở quán cà phê",
-            "Khi mẹ hỏi 'Con ăn chưa' lúc 10 giờ đêm",
-            "Sự thật về việc học tiếng Anh của người Việt",
+            "Những kiểu người ở quán cà phê mà ai cũng từng gặp",
+            "Khi mẹ hỏi ăn chưa nhưng thật ra muốn hỏi chuyện khác",
+            "Sự thật đau lòng về việc học tiếng Anh của nhiều người Việt",
+            "Một kiểu họp công ty khiến ai cũng giả vờ tập trung",
+            "Vì sao đi cà phê để làm việc nhưng cuối cùng chỉ lướt điện thoại",
+        ],
+    },
+
+    # ─────────────────────────────────────────────────────────────────
+    # 11. MOTION TECH SHORT
+    # ─────────────────────────────────────────────────────────────────
+    "motion_tech": {
+        "label": "⚡ Motion Tech Short",
+        "description": "AI, công nghệ, giáo dục theo style motion design",
+        "color": "orange",
+        "system_prompt": """Bạn là creator/editor chuyên video Shorts motion-tech cho AI, công nghệ, giáo dục và fact.
+Phong cách: nhanh, sắc, visual-first, giống các video tech short có headline lớn, badge, proof card, terminal/UI mock và CTA rõ.
+
+NGUYÊN TẮC:
+1. Hook phải nêu ngay offer, nghịch lý hoặc proof:
+   - "AI này giúp bạn học nhanh hơn, nhưng có một bẫy."
+   - "Một command có thể dựng web trong vài phút."
+   - "Bạn tưởng miễn phí, nhưng phần quan trọng là local-first."
+2. Luôn có concrete proof: con số, command, workflow, before/after, UI, privacy, speed, use case.
+3. Không kể lể như bài review. Mỗi câu là một claim ngắn, proof hoặc cú lật.
+4. Ưu tiên các cụm chữ ngắn trên màn hình:
+   - "AI TOOL"
+   - "OPEN DESIGN"
+   - "MIỄN PHÍ"
+   - "57K sao"
+   - "$ pnpm tools-dev run web"
+   - "Local-first"
+   - "Lưu video lại"
+5. Slide nên dùng layout "motion_tech" hoặc "receipt" nhiều hơn "card/list".
+6. CTA cuối phải thiên save/share/comment: "Lưu lại để thử", "Gửi cho người cần", "Muốn ví dụ tiếp theo không?"
+
+VISUAL STYLE: dark teal gradient, orange and cyan accents, huge bold typography, terminal/proof box, stat badges, save CTA button, subtle glow particles
+TRÁNH: giọng dạy học chung chung, mô tả công nghệ mơ hồ, nói quá không có proof, slide nhiều chữ, copy brand của kênh khác""",
+        "example_topics": [
+            "AI tool miễn phí giúp dựng UI trong vài phút",
+            "Một command giúp chạy web app ngay trên máy",
+            "Cách AI làm bạn học nhanh hơn nhưng dễ hiểu sai hơn",
+            "Công cụ local-first không gửi dữ liệu đi đâu",
+            "Một workflow giúp biến prompt thành landing page",
+            "Sự thật về AI coding mà người mới dễ bỏ qua",
         ],
     },
 }
@@ -314,13 +365,17 @@ LUẬT CHUNG CHO NỘI DUNG SHORTS TIẾNG VIỆT:
 - Mỗi câu chỉ nên có một ý. Ưu tiên câu ngắn, mạnh, dễ làm caption.
 - Mở đầu phải đánh vào tò mò, nỗi đau, lợi ích hoặc nghịch lý. Không chào hỏi, không dẫn nhập.
 - Nội dung phải có ích thật nhưng không được đều đều: phải có mâu thuẫn, ví dụ đời thật, cú lật và hành động nhỏ.
+- Mỗi video phải mở một vòng tò mò ở 1-3 giây đầu và đóng vòng đó ở gần cuối.
+- Mỗi 6-8 giây nên có một pattern interrupt: "nghe vô lý", "cú lật", "vấn đề thật là", "đây mới là phần nguy hiểm".
 - Chỉ chọn MỘT góc hẹp của chủ đề. Không cố giải thích toàn bộ chủ đề trong một video.
 - Mỗi video phải có một câu "à ra vậy" ở giữa hoặc gần cuối, làm người xem thấy mình vừa nhận ra điều mới.
+- Tránh hook đã quá quen như "Bạn tưởng X đơn giản?", "Sự thật về X", "Đừng bỏ qua điều này" nếu không kèm chi tiết cụ thể.
 - Ưu tiên tình huống rất cụ thể: lương tháng, tiền chợ, hóa đơn điện, điện thoại trước khi ngủ, sếp nhắn tin, bữa cơm gia đình, cà phê sáng.
 - Tránh giọng liệt kê: không mở nhiều câu bằng "đầu tiên", "tiếp theo", "ngoài ra", "tóm lại".
 - Không bịa nguồn, không bịa nghiên cứu, không dùng số liệu nếu không chắc. Nếu dùng số, hãy nói theo hướng ước lượng.
 - Tránh tuyệt đối hóa: "chắc chắn", "100%", "đảm bảo", "ai cũng", "không bao giờ".
 - CTA cuối phải tự nhiên: "Lưu lại nếu cần", "Bạn từng gặp chưa?", "Muốn phần 2 thì bình luận".
+- CTA tốt nhất là tạo phản hồi: hỏi người xem đang gặp trường hợp nào, muốn ví dụ nào, đồng ý hay phản đối.
 - Visual prompt vẫn phải bằng tiếng Anh, cụ thể, ưu tiên cảnh đời sống Việt Nam khi hợp chủ đề.
 """
 

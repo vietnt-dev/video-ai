@@ -28,12 +28,12 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Triết lý sống, lời dạy cổ nhân",
         color: "amber",
         example_topics: [
-            "Cổ nhân dạy về tiền bạc và hạnh phúc",
-            "Lời dạy của người xưa về chọn bạn mà chơi",
-            "Bí quyết sống thọ của cổ nhân Việt",
-            "Cổ nhân dạy cách đối nhân xử thế",
-            "Triết lý sống của người xưa về thành công",
-            "Lời cổ nhân về hôn nhân và gia đình"
+            "Cổ nhân có một lời dạy về tiền bạc mà nhiều người hiểu sai",
+            "Sai lầm khi chọn bạn mà người xưa đã cảnh báo từ lâu",
+            "Bí quyết sống thọ của người xưa không nằm ở thuốc bổ",
+            "Một quy tắc đối nhân xử thế giúp tránh mất lòng người",
+            "Người xưa không theo đuổi thành công theo cách bạn nghĩ",
+            "Lời cổ nhân về hôn nhân nghe cũ nhưng vẫn đúng hôm nay"
         ]
     },
     {
@@ -42,12 +42,12 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Tử vi, tướng số, phong thủy",
         color: "purple",
         example_topics: [
-            "Người sinh tháng 3 có vận mệnh đặc biệt",
-            "3 dấu hiệu trên bàn tay cho thấy bạn sẽ giàu có",
-            "Phong thủy phòng ngủ thu hút tài lộc",
-            "Tử vi 12 con giáp năm 2025",
-            "Dấu hiệu trên khuôn mặt tiết lộ tính cách",
-            "Số điện thoại hợp mệnh mang lại may mắn"
+            "Một đặc điểm nhỏ trên bàn tay thường bị nhiều người bỏ qua",
+            "Người sinh tháng 3 thường có một điểm tính cách rất lạ",
+            "Sai lầm phong thủy phòng ngủ khiến bạn khó nghỉ ngơi",
+            "Dấu hiệu trên khuôn mặt tiết lộ cách bạn xử lý áp lực",
+            "Vì sao nhiều người chọn số đẹp nhưng vẫn không thấy may mắn",
+            "Một thói quen hằng ngày ảnh hưởng vận khí nhiều hơn vật phẩm"
         ]
     },
     {
@@ -56,11 +56,12 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Kiến thức gây sốc, ít ai biết",
         color: "red",
         example_topics: [
-            "Sự thật về não người mà trường học không dạy",
-            "Tại sao người Nhật sống thọ nhất thế giới",
-            "Sự thật về giấc ngủ mà 99% người không biết",
-            "Những điều bạn làm hàng ngày đang hại sức khỏe",
-            "Sự thật về tiền bạc mà người giàu biết còn người nghèo không"
+            "Vì sao não bạn nghiện video ngắn nhanh hơn bạn nghĩ",
+            "Sự thật về giấc ngủ mà nhiều người trẻ đang bỏ qua",
+            "Một thói quen hằng ngày đang âm thầm làm bạn kém tập trung",
+            "Bạn tưởng trí nhớ kém do tuổi tác nhưng lý do thật khác hơn",
+            "Sự thật về dopamine khiến bạn khó rời điện thoại",
+            "Điều trường học ít dạy về cách não học một kỹ năng mới"
         ]
     },
     {
@@ -69,11 +70,12 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Tâm lý học, kỹ năng sống",
         color: "blue",
         example_topics: [
-            "Tại sao bạn trì hoãn và cách dừng lại",
-            "Hiệu ứng tâm lý khiến bạn tiêu tiền không kiểm soát",
-            "Cách não bộ tạo thói quen và cách thay đổi",
-            "Tại sao người thông minh thường cô đơn hơn",
-            "Kỹ thuật 5 giây thay đổi cuộc đời của Mel Robbins"
+            "Tại sao bạn biết phải làm nhưng vẫn cứ trì hoãn",
+            "Hiệu ứng tâm lý khiến bạn tiêu tiền rồi mới hối hận",
+            "Cách não tạo thói quen xấu chỉ bằng một phần thưởng nhỏ",
+            "Vì sao người thông minh vẫn ra quyết định rất tệ",
+            "Một mẹo 5 giây giúp bạn thoát khỏi vòng trì hoãn",
+            "Bạn tưởng mình lười nhưng thật ra não đang né đau"
         ]
     },
     {
@@ -82,11 +84,12 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Tài chính cá nhân, đầu tư",
         color: "green",
         example_topics: [
-            "Quy tắc 50-30-20 quản lý tiền lương",
-            "Cách đầu tư 1 triệu/tháng để có 1 tỷ",
-            "Sai lầm tài chính của người Việt ở độ tuổi 20-30",
-            "Cách người giàu nghĩ về tiền khác người nghèo",
-            "5 nguồn thu nhập thụ động phù hợp người Việt"
+            "Sai lầm tiền bạc khiến nhiều người trẻ lương cao vẫn hết tiền",
+            "Vì sao quy tắc 50-30-20 không hợp với mọi người Việt",
+            "Bạn tưởng tiết kiệm là giàu nhưng thiếu bước này vẫn thua",
+            "Một lỗi mua sắm nhỏ đang ăn mất cả tháng lương của bạn",
+            "Người giàu không nghĩ về tiền theo cách người mới đi làm nghĩ",
+            "Cách bắt đầu đầu tư nhỏ mà không tự biến mình thành con bạc"
         ]
     },
     {
@@ -95,11 +98,12 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Sức khỏe, bài thuốc dân gian Việt",
         color: "emerald",
         example_topics: [
-            "Gừng nghệ mật ong - bài thuốc vàng",
-            "5 loại rau Việt Nam tốt hơn thuốc bổ",
-            "Tại sao người Việt xưa ít bị ung thư hơn bây giờ",
-            "Bài thuốc dân gian trị mất ngủ không cần thuốc",
-            "Thói quen ăn uống của người Việt thọ 100 tuổi"
+            "Một thói quen trước khi ngủ đang phá chất lượng giấc ngủ",
+            "Bạn tưởng uống nhiều nước luôn tốt nhưng có một lỗi phổ biến",
+            "Loại rau quen thuộc trong mâm cơm Việt có lợi hơn bạn nghĩ",
+            "Vì sao càng cố ngủ sớm bạn càng khó ngủ hơn",
+            "Một sai lầm ăn sáng khiến bạn nhanh đói và mệt hơn",
+            "Bài thuốc dân gian nào nên cẩn thận trước khi tin"
         ]
     },
     {
@@ -108,11 +112,12 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Tình yêu, hôn nhân, gia đình",
         color: "rose",
         example_topics: [
-            "Dấu hiệu người đó yêu bạn thật lòng",
-            "Tại sao đàn ông Việt ngại nói yêu",
-            "Cách nói chuyện với cha mẹ về chuyện hôn nhân",
-            "Bí quyết hôn nhân bền vững của các cụ",
-            "Sai lầm nuôi dạy con mà cha mẹ Việt hay mắc"
+            "Dấu hiệu người đó cần bạn chứ chưa chắc yêu bạn",
+            "Tại sao nhiều người Việt ngại nói yêu dù rất quan tâm",
+            "Một câu nói của cha mẹ vô tình làm con xa cách hơn",
+            "Sai lầm hôn nhân không ồn ào nhưng làm tình cảm cạn dần",
+            "Vì sao càng khuyên con nhiều con càng không nghe",
+            "Điều các cặp đôi hay né nhưng quyết định mối quan hệ"
         ]
     },
     {
@@ -121,10 +126,12 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Nội dung viral, mọi đối tượng",
         color: "orange",
         example_topics: [
-            "5 sự thật về não người",
-            "Cách kiếm tiền online năm 2025",
-            "Bí quyết ngủ ngon trong 5 phút",
-            "Tại sao người giàu không làm việc chăm chỉ hơn"
+            "Sai lầm lớn nhất khi dùng ChatGPT để học",
+            "Vì sao AI không cướp việc của bạn nhưng người biết AI thì có thể",
+            "5 giây đầu quyết định video có viral không như thế nào",
+            "Một thói quen nhỏ đang phá hủy khả năng tập trung",
+            "Vì sao bạn càng xem Shorts càng khó làm việc sâu",
+            "Công nghệ đang âm thầm thay đổi cách bạn kiếm tiền"
         ]
     },
     {
@@ -133,9 +140,11 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Kiến thức bổ ích, dễ hiểu",
         color: "sky",
         example_topics: [
-            "Lạm phát là gì và ảnh hưởng đến bạn",
-            "Cách internet hoạt động trong 60 giây",
-            "Tại sao bầu trời màu xanh - giải thích đơn giản"
+            "Lạm phát đang lấy tiền của bạn theo cách rất khó thấy",
+            "Internet hoạt động thế nào trong một ví dụ 60 giây",
+            "Tại sao bầu trời màu xanh nhưng hoàng hôn lại đỏ",
+            "Vì sao pin điện thoại chai nhanh hơn bạn nghĩ",
+            "Một ví dụ đơn giản giúp hiểu AI tạo sinh hoạt động thế nào"
         ]
     },
     {
@@ -144,9 +153,25 @@ const DEFAULT_STYLES: StyleOption[] = [
         description: "Nội dung hài, relatable",
         color: "yellow",
         example_topics: [
-            "Những kiểu người Việt hay gặp ở quán cà phê",
-            "Khi mẹ hỏi con ăn chưa lúc 10 giờ đêm",
-            "Sự thật về việc học tiếng Anh của người Việt"
+            "Những kiểu người ở quán cà phê mà ai cũng từng gặp",
+            "Khi mẹ hỏi ăn chưa nhưng thật ra muốn hỏi chuyện khác",
+            "Sự thật đau lòng về việc học tiếng Anh của nhiều người Việt",
+            "Một kiểu họp công ty khiến ai cũng giả vờ tập trung",
+            "Vì sao đi cà phê để làm việc nhưng cuối cùng chỉ lướt điện thoại"
+        ]
+    },
+    {
+        value: "motion_tech",
+        label: "Motion Tech Short",
+        description: "AI, công nghệ, giáo dục motion design",
+        color: "orange",
+        example_topics: [
+            "AI tool miễn phí giúp dựng UI trong vài phút",
+            "Một command giúp chạy web app ngay trên máy",
+            "Cách AI làm bạn học nhanh hơn nhưng dễ hiểu sai hơn",
+            "Công cụ local-first không gửi dữ liệu đi đâu",
+            "Một workflow giúp biến prompt thành landing page",
+            "Sự thật về AI coding mà người mới dễ bỏ qua"
         ]
     }
 ];
@@ -229,7 +254,7 @@ export default function GeneratorForm({ onGenerate, isLoading, autoUploadYT, onA
             <div className="space-y-2">
                 <div className="flex items-center justify-between">
                     <label className="text-[11px] font-bold uppercase tracking-widest text-gray-600">
-                        Chủ đề video
+                        Ý tưởng video
                     </label>
                     <button
                         type="button"
@@ -237,13 +262,13 @@ export default function GeneratorForm({ onGenerate, isLoading, autoUploadYT, onA
                         disabled={isLoading}
                         className="text-[10px] text-sky-400 hover:text-sky-300 flex items-center gap-1 font-semibold transition-colors disabled:opacity-40"
                     >
-                        🎲 Gợi ý ngẫu nhiên
+                        Tạo ý tưởng
                     </button>
                 </div>
                 <textarea
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
-                    placeholder={`Nhập chủ đề hoặc click vào các gợi ý bên dưới...`}
+                    placeholder={`Nhập một ý tưởng có tò mò, mâu thuẫn hoặc sự thật bất ngờ. Ví dụ: Vì sao não bạn nghiện video ngắn?`}
                     rows={3}
                     disabled={isLoading}
                     className={clsx(
@@ -256,7 +281,7 @@ export default function GeneratorForm({ onGenerate, isLoading, autoUploadYT, onA
                 />
                 {suggestions.length > 0 && (
                     <div className="space-y-1.5">
-                        <span className="text-[10px] text-slate-500 font-semibold block">💡 Gợi ý chủ đề hay:</span>
+                        <span className="text-[10px] text-slate-500 font-semibold block">Ý tưởng dễ viral:</span>
                         <div className="flex flex-wrap gap-1.5">
                             {suggestions.map((ex) => (
                                 <button

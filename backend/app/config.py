@@ -34,6 +34,13 @@ class Settings(BaseSettings):
     max_video_duration: int = 60
     video_width: int = 1080
     video_height: int = 1920
+    ffmpeg_threads: int = 2
+
+    # Pipeline/runtime settings
+    job_meta_ttl_seconds: int = 7 * 24 * 60 * 60
+    artifact_retention_days: int = 7
+    media_concurrency: int = 2
+    tts_concurrency: int = 2
 
     # TTS Engine
     tts_engine: str = "edge-tts"

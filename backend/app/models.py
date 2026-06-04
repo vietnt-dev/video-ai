@@ -21,7 +21,7 @@ class GenerateVideoRequest(BaseModel):
 
 
 class SlideContent(BaseModel):
-    layout: str  # "title", "compare", "list", "card"
+    layout: str  # title, compare, list, card, big_number, one_word, wrong_right, myth_fact, timeline, receipt, comment_cta, motion_tech
     title: str
     content: List[str]
 
